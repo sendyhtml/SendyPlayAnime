@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SendyPlay - Dashboard Anime</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #1a120b;
+            color: white;
+            padding-bottom: 80px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(26, 18, 11, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #FFD700;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo h2 {
+            font-size: 28px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 40px;
+            padding: 8px 20px;
+            border: 1px solid #FFD700;
+        }
+
+        .search-bar i {
+            color: #FFD700;
+            margin-right: 10px;
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: white;
+            width: 100%;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-bar input:focus {
+            outline: none;
+        }
+
+        .search-btn {
+            background: #FFD700;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 20px;
+            margin-left: 10px;
+            color: #1a120b;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #FFA500;
+            transform: scale(1.05);
+        }
+
+        /* User Profile Menu */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 20px 8px 15px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .user-menu:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: #FFD700;
+        }
+
+        .user-menu-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1a120b;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .username {
+            color: #FFD700;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .search-icon-btn {
+            color: #FFD700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .search-icon-btn:hover {
+            background: #FFD700;
+            color: #1a120b;
+            transform: scale(1.1);
+        }
+
+        /* Level Badge */
+        .level-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .level-number {
+            background: #FFD700;
+            color: #1a120b;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .level-title {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+        }
+
+        .xp-bar-container {
+            width: 150px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 3px;
+        }
+
+        .xp-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .xp-text {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-left: 5px;
+        }
+
+        /* Role Levels */
+        .role-wibu {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 20px;
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+            margin-left: 5px;
+        }
+
+        /* Dropdown Menu */
+        .user-dropdown {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: #2d1f12;
+            border: 2px solid #FFD700;
+            border-radius: 20px;
+            padding: 15px;
+            width: 250px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .user-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+        }
+
+        .dropdown-item i {
+            width: 20px;
+            color: #FFD700;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: rgba(255, 215, 0, 0.3);
+            margin: 10px 0;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 30px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(145deg, #2d1f12, #1a120b);
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid #FFD700;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 18px;
+            max-width: 600px;
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 10px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: #FFD700;
+            color: #1a120b;
+            border-color: #FFD700;
+        }
+
+        /* Search Results */
+        .search-results {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .search-results.show {
+            display: block;
+        }
+
+        /* Anime Grid */
+        .section-title {
+            font-size: 24px;
+            margin: 40px 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #FFD700;
+        }
+
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .anime-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .anime-card:hover {
+            transform: translateY(-10px);
+            border-color: #FFD700;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .anime-image {
+            width: 100%;
+            height: 280px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            background-color: #2d1f12;
+        }
+
+        .anime-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        }
+
+        .anime-image.no-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 215, 0, 0.3);
+            font-size: 48px;
+        }
+
+        .anime-info {
+            padding: 15px;
+            position: relative;
+        }
+
+        .anime-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #FFD700;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 48px;
+        }
+
+        .anime-meta {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+        }
+
+        .rating {
+            color: #FFD700;
+        }
+
+        /* Level Progress Card */
+        .level-progress-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .level-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a120b;
+        }
+
+        .level-details {
+            flex: 1;
+        }
+
+        .level-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .current-level {
+            font-size: 20px;
+            font-weight: 700;
+            color: #FFD700;
+        }
+
+        .next-level {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+
+        .xp-progress {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .xp-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .xp-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #FFD700;
+        }
+
+        .loading i {
+            font-size: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 50px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 18px;
+        }
+
+        .no-results i {
+            font-size: 48px;
+            color: #FFD700;
+            margin-bottom: 20px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 18, 11, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 20px;
+            border-top: 2px solid #FFD700;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 12px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: #FFD700;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-bar {
+                max-width: 100%;
+            }
+            .hero-title {
+                font-size: 32px;
+            }
+            .anime-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            .user-menu {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .xp-bar-container {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h2><i class="fas fa-film"></i> SendyPlay</h2>
+            </div>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Cari anime (contoh: One Piece, Naruto)..." id="searchInput" onkeypress="handleKeyPress(event)">
+                <button class="search-btn" onclick="searchAnime()">Cari</button>
+            </div>
+            
+            <!-- User Menu dengan Level -->
+            <div class="user-menu" onclick="toggleDropdown()">
+                <div class="user-menu-left">
+                    <div class="avatar" id="userAvatar"></div>
+                    <div class="user-info">
+                        <div class="user-name-row">
+                            <span class="username" id="displayUsername"></span>
+                            <div class="search-icon-btn" onclick="focusSearch(event)">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                        <div class="level-badge">
+                            <span class="level-number" id="userLevel">1</span>
+                            <span class="level-title" id="levelTitle">Wibu Pemula</span>
+                            <div class="xp-bar-container">
+                                <div class="xp-bar-fill" id="xpBarFill" style="width: 0%"></div>
+                            </div>
+                            <span class="xp-text" id="xpText">0/100 XP</span>
+                        </div>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-down" style="color: #FFD700;"></i>
+
+                <!-- Dropdown Menu -->
+                <div class="user-dropdown" id="userDropdown">
+                    <div class="dropdown-item" onclick="navigateTo('profile')">
+                        <i class="fas fa-user"></i>
+                        <span>Profil Saya</span>
+                    </div>
+                    <div class="dropdown-item" onclick="navigateTo('stats')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Statistik Nonton</span>
+                    </div>
+                    <div class="dropdown-item" onclick="navigateTo('achievements')">
+                        <i class="fas fa-trophy"></i>
+                        <span>Pencapaian</span>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Log Out</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Selamat Datang di SendyPlay! 🎬</h1>
+                <p class="hero-subtitle">Nonton ribuan anime gratis dari MyAnimeList, subtitle Indonesia. Update setiap hari!</p>
+            </div>
+        </div>
+
+        <!-- Level Progress Card -->
+        <div class="level-progress-card">
+            <div class="level-icon" id="levelIcon">1</div>
+            <div class="level-details">
+                <div class="level-row">
+                    <span class="current-level" id="currentLevelDisplay">Level 1</span>
+                    <span class="role-wibu" id="roleDisplay">Wibu Pemula</span>
+                </div>
+                <div class="xp-progress">
+                    <div class="xp-progress-fill" id="xpProgressFill" style="width: 0%"></div>
+                </div>
+                <div class="xp-info">
+                    <span id="currentXP">0 XP</span>
+                    <span id="nextLevelXP">100 XP ke Level 2</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="categories" id="categories">
+            <button class="category-btn active" onclick="filterByCategory('all', event)">Semua</button>
+            <button class="category-btn" onclick="filterByCategory('action', event)">Action</button>
+            <button class="category-btn" onclick="filterByCategory('romance', event)">Romance</button>
+            <button class="category-btn" onclick="filterByCategory('comedy', event)">Comedy</button>
+            <button class="category-btn" onclick="filterByCategory('fantasy', event)">Fantasy</button>
+            <button class="category-btn" onclick="filterByCategory('slice of life', event)">Slice of Life</button>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="loading" style="display: none;">
+            <i class="fas fa-spinner"></i>
+            <p>Memuat anime...</p>
+        </div>
+
+        <!-- Search Results Section -->
+        <div id="searchResults" class="search-results">
+            <div class="section-title">
+                <i class="fas fa-search"></i>
+                <h3>Hasil Pencarian: "<span id="searchQuery"></span>"</h3>
+            </div>
+            <div class="anime-grid" id="searchGrid"></div>
+        </div>
+
+        <!-- Regular Sections -->
+        <div id="regularSections">
+            <div class="section-title">
+                <i class="fas fa-fire"></i>
+                <h3>Top Anime MyAnimeList</h3>
+            </div>
+            <div class="anime-grid" id="topAnimeGrid"></div>
+
+            <div class="section-title">
+                <i class="fas fa-clock"></i>
+                <h3>Anime Mendatang (Upcoming)</h3>
+            </div>
+            <div class="anime-grid" id="upcomingGrid"></div>
+
+            <div class="section-title">
+                <i class="fas fa-star"></i>
+                <h3>Rekomendasi Untukmu</h3>
+            </div>
+            <div class="anime-grid" id="recommendedGrid"></div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+        </a>
+        <div class="nav-item" onclick="navigateTo('profile')">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </div>
+        <div class="nav-item" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+        </div>
+    </div>
+
+    <script>
+        // Check login status
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        // Level System Configuration
+        const LEVEL_TITLES = [
+            { min: 1, title: "Wibu Pemula" },
+            { min: 10, title: "Wibu Amatir" },
+            { min: 20, title: "Wibu Menengah" },
+            { min: 30, title: "Wibu Expert" },
+            { min: 40, title: "Wibu Master" },
+            { min: 50, title: "Wibu Legend" },
+            { min: 60, title: "Wibu God" },
+            { min: 70, title: "Wibu Immortal" },
+            { min: 80, title: "Wibu Supreme" },
+            { min: 90, title: "Wibu Divine" },
+            { min: 100, title: "Wibu Ultimate" }
+        ];
+
+        // Initialize user level data
+        let userXP = parseInt(localStorage.getItem('userXP')) || 0;
+        let userLevel = parseInt(localStorage.getItem('userLevel')) || 1;
+        let watchedCount = parseInt(localStorage.getItem('watchedCount')) || 0;
+
+        // XP required for next level (increases with level)
+        function getXPForLevel(level) {
+            return Math.floor(100 * Math.pow(1.5, level - 1));
+        }
+
+        function getCurrentLevelXP() {
+            let totalXP = 0;
+            for (let i = 1; i < userLevel; i++) {
+                totalXP += getXPForLevel(i);
+            }
+            return userXP - totalXP;
+        }
+
+        function getXPForCurrentLevel() {
+            return getXPForLevel(userLevel);
+        }
+
+        function getXPProgress() {
+            const currentLevelXP = getCurrentLevelXP();
+            const requiredXP = getXPForCurrentLevel();
+            return (currentLevelXP / requiredXP) * 100;
+        }
+
+        function getLevelTitle(level) {
+            for (let i = LEVEL_TITLES.length - 1; i >= 0; i--) {
+                if (level >= LEVEL_TITLES[i].min) {
+                    return LEVEL_TITLES[i].title;
+                }
+            }
+            return "Wibu Pemula";
+        }
+
+        function updateLevelDisplay() {
+            // Update level badge
+            document.getElementById('userLevel').textContent = userLevel;
+            document.getElementById('levelIcon').textContent = userLevel;
+            document.getElementById('currentLevelDisplay').textContent = `Level ${userLevel}`;
+            
+            // Update level title
+            const levelTitle = getLevelTitle(userLevel);
+            document.getElementById('levelTitle').textContent = levelTitle;
+            document.getElementById('roleDisplay').textContent = levelTitle;
+            
+            // Update XP bar
+            const currentXP = getCurrentLevelXP();
+            const requiredXP = getXPForCurrentLevel();
+            const progress = (currentXP / requiredXP) * 100;
+            
+            document.getElementById('xpBarFill').style.width = `${progress}%`;
+            document.getElementById('xpProgressFill').style.width = `${progress}%`;
+            
+            // Update XP text
+            document.getElementById('xpText').textContent = `${currentXP}/${requiredXP} XP`;
+            document.getElementById('currentXP').textContent = `${currentXP} XP`;
+            document.getElementById('nextLevelXP').textContent = `${requiredXP - currentXP} XP ke Level ${userLevel + 1}`;
+            
+            // Save to localStorage
+            localStorage.setItem('userLevel', userLevel);
+            localStorage.setItem('userXP', userXP);
+            localStorage.setItem('watchedCount', watchedCount);
+        }
+
+        // Add XP when watching anime
+        function addXP(amount = 10) {
+            userXP += amount;
+            watchedCount++;
+            
+            // Check for level up
+            while (true) {
+                const requiredXP = getXPForLevel(userLevel);
+                const currentLevelXP = getCurrentLevelXP();
+                
+                if (currentLevelXP >= requiredXP) {
+                    userLevel++;
+                    showNotification(`🎉 Selamat! Level naik ke ${userLevel}!`, true);
+                } else {
+                    break;
+                }
+            }
+            
+            updateLevelDisplay();
+        }
+
+        // Simulate XP gain (untuk testing, bisa dihapus di production)
+        // setInterval(() => addXP(5), 30000); // Tambah XP setiap 30 detik
+
+        // Display user info
+        const username = localStorage.getItem('username') || 'AnimeFan';
+        document.getElementById('displayUsername').textContent = username;
+        
+        // Check if login with Google and has avatar
+        const userAvatar = localStorage.getItem('userAvatar');
+        const avatarElement = document.getElementById('userAvatar');
+        
+        if (userAvatar) {
+            avatarElement.innerHTML = `<img src="${userAvatar}" alt="avatar">`;
+        } else {
+            avatarElement.textContent = username.charAt(0).toUpperCase();
+        }
+
+        // Initialize level display
+        updateLevelDisplay();
+
+        // Toggle dropdown menu
+        function toggleDropdown() {
+            document.getElementById('userDropdown').classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.closest('.user-menu')) {
+                document.getElementById('userDropdown').classList.remove('show');
+            }
+        }
+
+        // Focus search from icon
+        function focusSearch(event) {
+            event.stopPropagation();
+            document.getElementById('searchInput').focus();
+        }
+
+        // API Configuration - Menggunakan Jikan API (MyAnimeList)
+        const JIKAN_API = 'https://api.jikan.moe/v4';
+
+        // Fetch anime from MyAnimeList
+        async function fetchAnime() {
+            try {
+                document.getElementById('loading').style.display = 'block';
+
+                // Fetch top anime
+                const topRes = await fetch(`${JIKAN_API}/top/anime?limit=24`);
+                const topData = await topRes.json();
+
+                // Fetch upcoming anime
+                const upcomingRes = await fetch(`${JIKAN_API}/seasons/upcoming?limit=24`);
+                const upcomingData = await upcomingRes.json();
+
+                // Fetch recommended (seasonal anime)
+                const date = new Date();
+                const year = date.getFullYear();
+                const season = getSeason(date);
+                const seasonalRes = await fetch(`${JIKAN_API}/seasons/${year}/${season}?limit=24`);
+                const seasonalData = await seasonalRes.json();
+
+                renderAnimeGrid('topAnimeGrid', topData.data);
+                renderAnimeGrid('upcomingGrid', upcomingData.data);
+                renderAnimeGrid('recommendedGrid', seasonalData.data);
+
+                document.getElementById('loading').style.display = 'none';
+            } catch (error) {
+                console.error('Error fetching anime:', error);
+                document.getElementById('loading').innerHTML = '<p>Gagal memuat anime. Menggunakan data cadangan...</p>';
+                loadFallbackData();
+            }
+        }
+
+        function getSeason(date) {
+            const month = date.getMonth() + 1;
+            if (month >= 3 && month <= 5) return 'spring';
+            if (month >= 6 && month <= 8) return 'summer';
+            if (month >= 9 && month <= 11) return 'fall';
+            return 'winter';
+        }
+
+        function renderAnimeGrid(elementId, animeList) {
+            const grid = document.getElementById(elementId);
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+
+            if (!animeList || animeList.length === 0) {
+                grid.innerHTML = '<div class="no-results"><i class="fas fa-sad-tear"></i><p>Tidak ada anime ditemukan</p></div>';
+                return;
+            }
+
+            animeList.forEach(anime => {
+                const card = document.createElement('div');
+                card.className = 'anime-card';
+                card.onclick = () => watchAnime(anime.mal_id, anime.title);
+                
+                // Get image URL
+                const imageUrl = anime.images?.jpg?.image_url || '';
+                const rating = anime.score ? anime.score.toFixed(1) : 'N/A';
+                const episodes = anime.episodes || '?';
+                
+                // Create image container
+                const imageDiv = document.createElement('div');
+                imageDiv.className = 'anime-image';
+                
+                if (imageUrl) {
+                    imageDiv.style.backgroundImage = `url('${imageUrl}')`;
+                } else {
+                    imageDiv.classList.add('no-image');
+                    imageDiv.innerHTML = '<i class="fas fa-image"></i>';
+                }
+                
+                card.appendChild(imageDiv);
+                
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'anime-info';
+                infoDiv.innerHTML = `
+                    <div class="anime-title">${anime.title}</div>
+                    <div class="anime-meta">
+                        <span><i class="fas fa-star rating"></i> ${rating}</span>
+                        <span><i class="fas fa-play-circle"></i> ${episodes} eps</span>
+                    </div>
+                `;
+                card.appendChild(infoDiv);
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Search functionality menggunakan Jikan API
+        async function searchAnime() {
+            const query = document.getElementById('searchInput').value.trim();
+            
+            if (!query) {
+                alert('Masukkan judul anime yang ingin dicari!');
+                return;
+            }
+
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('searchQuery').textContent = query;
+            
+            try {
+                // Search menggunakan Jikan API
+                const response = await fetch(`${JIKAN_API}/anime?q=${encodeURIComponent(query)}&order_by=popularity&sort=asc&limit=24`);
+                const data = await response.json();
+                
+                if (data.data && data.data.length > 0) {
+                    renderAnimeGrid('searchGrid', data.data);
+                    document.getElementById('searchResults').classList.add('show');
+                    document.getElementById('regularSections').style.display = 'none';
+                } else {
+                    document.getElementById('searchGrid').innerHTML = '<div class="no-results"><i class="fas fa-sad-tear"></i><p>Anime tidak ditemukan. Coba judul lain!</p></div>';
+                    document.getElementById('searchResults').classList.add('show');
+                    document.getElementById('regularSections').style.display = 'none';
+                }
+
+            } catch (error) {
+                console.error('Search error:', error);
+                document.getElementById('searchGrid').innerHTML = '<div class="no-results"><i class="fas fa-exclamation-triangle"></i><p>Terjadi kesalahan. Silakan coba lagi.</p></div>';
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                searchAnime();
+            }
+        }
+
+        // Filter by category menggunakan Jikan API
+        async function filterByCategory(category, event) {
+            // Update active category
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            if (category === 'all') {
+                // Show regular sections
+                document.getElementById('searchResults').classList.remove('show');
+                document.getElementById('regularSections').style.display = 'block';
+                return;
+            }
+
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('searchQuery').textContent = category;
+            
+            try {
+                // Search by genre using Jikan API
+                const response = await fetch(`${JIKAN_API}/anime?genres=${getGenreId(category)}&order_by=popularity&sort=asc&limit=24`);
+                const data = await response.json();
+                
+                if (data.data && data.data.length > 0) {
+                    renderAnimeGrid('searchGrid', data.data);
+                    document.getElementById('searchResults').classList.add('show');
+                    document.getElementById('regularSections').style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Category filter error:', error);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        function getGenreId(genre) {
+            const genres = {
+                'action': 1,
+                'romance': 22,
+                'comedy': 4,
+                'fantasy': 10,
+                'slice of life': 36
+            };
+            return genres[genre.toLowerCase()] || 1;
+        }
+
+        function loadFallbackData() {
+            const fallbackAnime = [
+                { mal_id: 21, title: 'One Piece', images: { jpg: { image_url: 'https://cdn.myanimelist.net/images/anime/1244/138851.jpg' } }, score: 8.9, episodes: 1000 },
+                { mal_id: 20, title: 'Naruto', images: { jpg: { image_url: 'https://cdn.myanimelist.net/images/anime/1141/142503.jpg' } }, score: 8.5, episodes: 500 },
+                { mal_id: 16498, title: 'Attack on Titan', images: { jpg: { image_url: 'https://cdn.myanimelist.net/images/anime/1948/120625.jpg' } }, score: 9.0, episodes: 75 },
+                { mal_id: 38000, title: 'Demon Slayer', images: { jpg: { image_url: 'https://cdn.myanimelist.net/images/anime/1613/114576.jpg' } }, score: 8.8, episodes: 55 },
+                { mal_id: 40748, title: 'Jujutsu Kaisen', images: { jpg: { image_url: 'https://cdn.myanimelist.net/images/anime/1792/138022.jpg' } }, score: 8.7, episodes: 24 },
+                { mal_id: 31964, title: 'My Hero Academia', images: { jpg: { image_url: 'https://cdn.myanimelist.net/images/anime/1490/137815.jpg' } }, score: 8.4, episodes: 113 }
+            ];
+            
+            renderAnimeGrid('topAnimeGrid', fallbackAnime);
+            renderAnimeGrid('upcomingGrid', fallbackAnime);
+            renderAnimeGrid('recommendedGrid', fallbackAnime);
+        }
+
+        function watchAnime(animeId, title) {
+            // Add XP when watching anime
+            addXP(10); // 10 XP per episode
+            
+            localStorage.setItem('currentAnimeId', animeId);
+            localStorage.setItem('currentAnimeTitle', title);
+            window.location.href = 'watch.html';
+        }
+
+        function navigateTo(page) {
+            if (page === 'profile') {
+                window.location.href = 'profile.html';
+            } else if (page === 'stats') {
+                showNotification('Fitur Statistik akan segera hadir!', true);
+            } else if (page === 'achievements') {
+                showNotification('Fitur Pencapaian akan segera hadir!', true);
+            }
+            document.getElementById('userDropdown').classList.remove('show');
+        }
+
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userAvatar');
+            localStorage.removeItem('userLevel');
+            localStorage.removeItem('userXP');
+            localStorage.removeItem('watchedCount');
+            window.location.href = 'login.html';
+        }
+
+        function showNotification(message, isSuccess = true) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${isSuccess ? '#FFD700' : '#ff6b6b'};
+                color: ${isSuccess ? '#1a120b' : 'white'};
+                padding: 15px 25px;
+                border-radius: 30px;
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+                font-weight: 500;
+                box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+            `;
+            notification.innerHTML = `
+                <i class="fas ${isSuccess ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                <span style="margin-left: 10px;">${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Load anime on page load
+        fetchAnime();
+    </script>
+</body>
+</html>
