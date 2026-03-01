@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SendyPlay - Dashboard Anime</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #1a120b;
+            color: white;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(26, 18, 11, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #FFD700;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h2 {
+            font-size: 28px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .search-bar {
+            flex: 0.5;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 40px;
+            padding: 8px 20px;
+            border: 1px solid #FFD700;
+        }
+
+        .search-bar i {
+            color: #FFD700;
+            margin-right: 10px;
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: white;
+            width: 100%;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-bar input:focus {
+            outline: none;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .username {
+            color: #FFD700;
+            font-weight: 600;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1a120b;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 30px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(145deg, #2d1f12, #1a120b);
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid #FFD700;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 18px;
+            max-width: 600px;
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 10px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: #FFD700;
+            color: #1a120b;
+            border-color: #FFD700;
+        }
+
+        /* Anime Grid */
+        .section-title {
+            font-size: 24px;
+            margin: 40px 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #FFD700;
+        }
+
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .anime-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .anime-card:hover {
+            transform: translateY(-10px);
+            border-color: #FFD700;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .anime-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            background: linear-gradient(145deg, #2d1f12, #1a120b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 215, 0, 0.3);
+            font-size: 48px;
+        }
+
+        .anime-info {
+            padding: 15px;
+        }
+
+        .anime-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #FFD700;
+        }
+
+        .anime-meta {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+        }
+
+        .rating {
+            color: #FFD700;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 18, 11, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 20px;
+            border-top: 2px solid #FFD700;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 12px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: #FFD700;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .search-bar {
+                display: none;
+            }
+            .hero-title {
+                font-size: 32px;
+            }
+            .anime-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #FFD700;
+        }
+
+        .loading i {
+            font-size: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h2><i class="fas fa-film"></i> SendyPlay</h2>
+            </div>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Cari anime..." id="searchInput">
+            </div>
+            <div class="user-info">
+                <span class="username" id="displayUsername"></span>
+                <div class="avatar" id="userAvatar"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Selamat Datang di SendyPlay! 🎬</h1>
+                <p class="hero-subtitle">Nonton ribuan anime gratis, subtitle Indonesia. Update setiap hari!</p>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="categories" id="categories">
+            <button class="category-btn active" onclick="filterAnime('all')">Semua</button>
+            <button class="category-btn" onclick="filterAnime('action')">Action</button>
+            <button class="category-btn" onclick="filterAnime('romance')">Romance</button>
+            <button class="category-btn" onclick="filterAnime('comedy')">Comedy</button>
+            <button class="category-btn" onclick="filterAnime('fantasy')">Fantasy</button>
+            <button class="category-btn" onclick="filterAnime('slice of life')">Slice of Life</button>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Memuat anime...</p>
+        </div>
+
+        <!-- Anime Grid -->
+        <div class="section-title">
+            <i class="fas fa-fire"></i>
+            <h3>Trending Minggu Ini</h3>
+        </div>
+        <div class="anime-grid" id="trendingGrid"></div>
+
+        <div class="section-title">
+            <i class="fas fa-clock"></i>
+            <h3>Rilis Terbaru</h3>
+        </div>
+        <div class="anime-grid" id="latestGrid"></div>
+
+        <div class="section-title">
+            <i class="fas fa-star"></i>
+            <h3>Rekomendasi Untukmu</h3>
+        </div>
+        <div class="anime-grid" id="recommendedGrid"></div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+        </a>
+        <div class="nav-item" onclick="navigateTo('profile')">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </div>
+        <div class="nav-item" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span>
+        </div>
+    </div>
+
+    <script>
+        // Check login status
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        // Display username
+        const username = localStorage.getItem('username') || 'AnimeFan';
+        document.getElementById('displayUsername').textContent = username;
+        document.getElementById('userAvatar').textContent = username.charAt(0).toUpperCase();
+
+        // API Configuration (Jikan API - MyAnimeList Public API)
+        const API_BASE = 'https://api.jikan.moe/v4';
+
+        // Fetch anime from API
+        async function fetchAnime() {
+            try {
+                document.getElementById('loading').style.display = 'block';
+
+                // Fetch trending (top anime)
+                const trendingRes = await fetch(`${API_BASE}/top/anime?limit=10`);
+                const trendingData = await trendingRes.json();
+
+                // Fetch latest (seasonal)
+                const date = new Date();
+                const year = date.getFullYear();
+                const season = getSeason(date);
+                const latestRes = await fetch(`${API_BASE}/seasons/${year}/${season}?limit=10`);
+                const latestData = await latestRes.json();
+
+                // Fetch recommended (random popular)
+                const recommendedRes = await fetch(`${API_BASE}/top/anime?page=2&limit=10`);
+                const recommendedData = await recommendedRes.json();
+
+                renderAnimeGrid('trendingGrid', trendingData.data);
+                renderAnimeGrid('latestGrid', latestData.data);
+                renderAnimeGrid('recommendedGrid', recommendedData.data);
+
+                document.getElementById('loading').style.display = 'none';
+            } catch (error) {
+                console.error('Error fetching anime:', error);
+                document.getElementById('loading').innerHTML = '<p>Gagal memuat anime. Menggunakan data cadangan...</p>';
+                // Fallback data
+                loadFallbackData();
+            }
+        }
+
+        function getSeason(date) {
+            const month = date.getMonth() + 1;
+            if (month >= 3 && month <= 5) return 'spring';
+            if (month >= 6 && month <= 8) return 'summer';
+            if (month >= 9 && month <= 11) return 'fall';
+            return 'winter';
+        }
+
+        function renderAnimeGrid(elementId, animeList) {
+            const grid = document.getElementById(elementId);
+            grid.innerHTML = '';
+
+            animeList.forEach(anime => {
+                const card = document.createElement('div');
+                card.className = 'anime-card';
+                card.onclick = () => watchAnime(anime.mal_id, anime.title);
+                
+                const imageUrl = anime.images?.jpg?.image_url || '';
+                const rating = anime.score ? anime.score.toFixed(1) : 'N/A';
+                const year = anime.year || 'TBA';
+                
+                card.innerHTML = `
+                    <div class="anime-image" style="background-image: url('${imageUrl}'); background-size: cover; background-position: center;">
+                        ${!imageUrl ? '<i class="fas fa-image"></i>' : ''}
+                    </div>
+                    <div class="anime-info">
+                        <div class="anime-title">${anime.title}</div>
+                        <div class="anime-meta">
+                            <span><i class="fas fa-star rating"></i> ${rating}</span>
+                            <span>${year}</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function loadFallbackData() {
+            const fallbackAnime = [
+                { mal_id: 1, title: 'One Piece', score: 8.9, year: 1999, images: { jpg: { image_url: '' } } },
+                { mal_id: 2, title: 'Naruto', score: 8.5, year: 2002, images: { jpg: { image_url: '' } } },
+                { mal_id: 3, title: 'Attack on Titan', score: 9.0, year: 2013, images: { jpg: { image_url: '' } } },
+                { mal_id: 4, title: 'Demon Slayer', score: 8.8, year: 2019, images: { jpg: { image_url: '' } } },
+                { mal_id: 5, title: 'Jujutsu Kaisen', score: 8.7, year: 2020, images: { jpg: { image_url: '' } } },
+                { mal_id: 6, title: 'My Hero Academia', score: 8.4, year: 2016, images: { jpg: { image_url: '' } } }
+            ];
+            
+            renderAnimeGrid('trendingGrid', fallbackAnime);
+            renderAnimeGrid('latestGrid', fallbackAnime);
+            renderAnimeGrid('recommendedGrid', fallbackAnime);
+        }
+
+        function filterAnime(category) {
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter functionality bisa ditambahkan sesuai kebutuhan
+        }
+
+        function watchAnime(animeId, title) {
+            // Simpan ke localStorage untuk diambil di halaman watch
+            localStorage.setItem('currentAnimeId', animeId);
+            localStorage.setItem('currentAnimeTitle', title);
+            window.location.href = 'watch.html';
+        }
+
+        function navigateTo(page) {
+            if (page === 'profile') {
+                window.location.href = 'profile.html';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            localStorage.removeItem('userEmail');
+            window.location.href = 'login.html';
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            // Implement search if needed
+        });
+
+        // Load anime on page load
+        fetchAnime();
+    </script>
+</body>
+</html>
